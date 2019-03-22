@@ -16,4 +16,4 @@ def endChar = { String alphabet, int i ->
   }
 }
 nino = startChars( ('A'..'Z').join(), 2 ) + midNums( ('0'..'9').join(), 6 ) + endChar( ('A'..'Z').join(), 1 )
-
+testRunner.getTestCase().setPropertyValue("nino", randomValue);
