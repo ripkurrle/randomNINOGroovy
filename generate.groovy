@@ -1,19 +1,31 @@
 // Simple Groovy script to generate a valid NINO
 
-def startChars = { String alphabet, int i ->
-  new Random().with {
-    (1..i).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
-  }
+def randomChars = { String alphabet, int i ->
+    new Random().with {
+        (1..i).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+    }
 }
-def midNums = { String alphabet, int i ->
-  new Random().with {
-    (1..i).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+
+//exclusions
+String nino = randomChars( ('A'..'Z').join(), 2 )
+
+while(true)
+{
+  if(Arrays.asList("D", "F", "I", "Q", "U", "V").contains(nino[0]))
+  {
+    println 'DEBUG: ' + nino
+    nino = randomChars( ('A'..'Z').join(), 2 )
+    continue
   }
-}
-def endChar = { String alphabet, int i ->
-  new Random().with {
-    (1..i).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+
+  if(Arrays.asList("BG", "GB", "NK", "KN", "TN", "NT", "ZZ").contains(nino[0]))
+  {
+    println 'DEBUG: ' + nino
+    nino = randomChars( ('A'..'Z').join(), 2 )
+    continue
   }
+  break
 }
-nino = startChars( ('A'..'Z').join(), 2 ) + midNums( ('0'..'9').join(), 6 ) + endChar( ('A'..'Z').join(), 1 )
+
+nino = nino + randomChars( ('0'..'9').join(), 6 ) + randomChars( ('A'..'D').join(), 1 )
 testRunner.getTestCase().setPropertyValue("nino", randomValue);
