@@ -1,4 +1,7 @@
-// Simple Groovy script to generate a valid NINO
+/* 
+ * Title - Simple Groovy script to generate a valid NINO
+ * Prerequisite - TestCase Property named RandomNINO
+*/
 
 def randomChars = { String alphabet, int i ->
     new Random().with {
@@ -28,4 +31,4 @@ while(true)
 }
 
 nino = nino + randomChars( ('0'..'9').join(), 6 ) + randomChars( ('A'..'D').join(), 1 )
-testRunner.getTestCase().setPropertyValue("nino", randomValue);
+testRunner.getTestCase().setPropertyValue("RandomNINO", nino);
